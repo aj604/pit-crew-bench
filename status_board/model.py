@@ -1,5 +1,6 @@
 """Service health: what each service reports, and what the board shows for all of them."""
 
+import os
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from enum import StrEnum
