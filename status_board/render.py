@@ -44,6 +44,6 @@ def _card(service: Service) -> str:
     shown = service.shown_status
     name = escape(service.name)
     return (
-        f'<section class="card status-{shown}" data-service="{name}" data-status="{shown}">'
+        f'<section class="card status-{service.status}" data-service="{name}" data-status="{shown}">'
         f'<h2>{name}</h2><p class="latency">{service.latency_ms} ms</p></section>'
     )
