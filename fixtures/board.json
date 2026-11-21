@@ -1,0 +1,10 @@
+{
+  "title": "Service status",
+  "services": [
+    {"name": "web", "status": "up", "latency_ms": 38},
+    {"name": "api", "status": "up", "latency_ms": 612},
+    {"name": "db", "status": "up", "latency_ms": 9},
+    {"name": "queue", "status": "degraded", "latency_ms": 120}
+  ],
+  "expect": {"cards": 4, "overall": "degraded"}
+}

@@ -1,0 +1,38 @@
+[project]
+name = "status-board"
+version = "0.1.0"
+description = "A zero-dependency service status dashboard."
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812",  # conflicts with ruff format
+    "CPY001",  # no per-file copyright headers
+    "D203",    # conflicts with D211
+    "D213",    # conflicts with D212
+    "ISC001",  # conflicts with ruff format
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["D", "INP001", "PLR2004", "S101"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unreachable = true
+files = ["status_board", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = ["-ra", "--strict-markers", "--strict-config", "--import-mode=importlib"]
+filterwarnings = ["error"]

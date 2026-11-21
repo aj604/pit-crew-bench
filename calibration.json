@@ -1,0 +1,13 @@
+{
+  "_note": "Budgeted ubuntu-latest seconds per job phase. The slow tests sleep for these durations; CI wall-clock is not measured here.",
+  "job_overhead_seconds": 6.0,
+  "checkout_toolchain_seconds": 4.0,
+  "cold_install_seconds": 6.0,
+  "warm_install_seconds": 1.0,
+  "check_seconds": {"lint": 2.0, "typecheck": 5.0, "ui-check": 3.0, "unit": 2.0},
+  "e2e_seconds_per_case": 5.5,
+  "e2e_cases": ["steady", "cascade", "recovery", "brownout"],
+  "integration_seconds_per_case": 10.0,
+  "integration_cases": ["steady", "flapping", "cascade", "recovery", "brownout", "partition", "maintenance"],
+  "ticks_per_case": 10
+}
