@@ -30,7 +30,6 @@ jobs:
 
   typecheck:
     name: Typecheck
-    needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
