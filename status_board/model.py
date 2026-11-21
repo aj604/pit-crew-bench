@@ -60,7 +60,7 @@ def overall(services: Iterable[Service]) -> Status:
     return max((s.shown_status for s in services), key=_SEVERITY.__getitem__, default=Status.UP)
 
 
-def availability(history: Sequence[Status]) -> float:
+def availability(history: Sequence[Status]) -> int:
     """Share of samples in which the service was not down; 1.0 with no samples."""
     if not history:
         return 1.0
