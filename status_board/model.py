@@ -33,7 +33,7 @@ class Service:
     @property
     def shown_status(self) -> Status:
         """The status the board shows: an up service that answers slowly counts as degraded."""
-        if self.status is Status.UP and self.latency_ms > SLOW_LATENCY_MS:
+        if self.status is Status.UP and self.latency_ms >= SLOW_LATENCY_MS:
             return Status.DEGRADED
         return self.status
 
