@@ -49,6 +49,10 @@ jobs:
     needs: typecheck
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [1, 2, 3]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -57,13 +61,30 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install dependencies
-        run: python -m pip install -r requirements-dev.txt
+        run: python -m pip install -r requirements-dev.txt pytest-split
+      - name: Write test durations
+        run: |
+          cat <<'EOF' > .test_durations
+          {
+            "tests/e2e/test_pipeline.py::test_rendered_board_tracks_scenario[steady]": 5.5,
+            "tests/e2e/test_pipeline.py::test_rendered_board_tracks_scenario[cascade]": 5.5,
+            "tests/e2e/test_pipeline.py::test_rendered_board_tracks_scenario[recovery]": 5.5,
+            "tests/e2e/test_pipeline.py::test_rendered_board_tracks_scenario[brownout]": 5.5,
+            "tests/integration/test_simulation.py::test_scenario_timeline[steady]": 10.0,
+            "tests/integration/test_simulation.py::test_scenario_timeline[flapping]": 10.0,
+            "tests/integration/test_simulation.py::test_scenario_timeline[cascade]": 10.0,
+            "tests/integration/test_simulation.py::test_scenario_timeline[recovery]": 10.0,
+            "tests/integration/test_simulation.py::test_scenario_timeline[brownout]": 10.0,
+            "tests/integration/test_simulation.py::test_scenario_timeline[partition]": 10.0,
+            "tests/integration/test_simulation.py::test_scenario_timeline[maintenance]": 10.0
+          }
+          EOF
       - name: Unit tests
         run: python -m pytest tests/unit
       - name: End-to-end tests
-        run: python -m pytest tests/e2e
+        run: python -m pytest tests/e2e --splits 3 --group ${{ matrix.group }}
       - name: Integration tests
-        run: python -m pytest tests/integration
+        run: python -m pytest tests/integration --splits 3 --group ${{ matrix.group }}
 
   ui-check:
     name: UI check
